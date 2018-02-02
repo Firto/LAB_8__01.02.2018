@@ -3,15 +3,21 @@
 #include <ctime>
 #include <string>
 using namespace std;
-void Sort(int mass[], int size, string op) {
+void Sort_Miz_Vid(int mass[], int size, string op) {
+	int poch, kin = 0;
+	for (int i = 0; i < size; i++)
+		if (mass[i] < 0) { poch = i + 1; break; }
+	for (int i = size - 1; i>0; i--)
+		if (mass[i] < 0) { kin = i - 1; break; }
+
 	if (op == "spad") {
-		for (int i = 0; i < size - 1; i++)
-			for (int j = size - 1; j > i; j--)
+		for (int i = poch; i < kin - 1; i++)
+			for (int j = kin - 1; j > i; j--)
 				if (mass[j] > mass[j - 1]) swap(mass[j], mass[j - 1]);
 	}
 	else if (op == "zrost") {
-		for (int i = 0; i < size - 1; i++)
-			for (int j = size - 1; j > i; j--)
+		for (int i = poch; i < kin - 1; i++)
+			for (int j = kin - 1; j > i; j--)
 				if (mass[j] < mass[j - 1]) swap(mass[j], mass[j - 1]);
 	}
 }
@@ -28,13 +34,13 @@ void RandMass(int arr[], int size, int a, int b)
 void main() {
 	const int size = 10;
 	int arr[size];
-	RandMass(arr, size, -9, 9);
+	RandMass(arr, size, -10, 20);
 	CoutMass(arr, size);
 	cout << endl << "Spad" << endl;
-	Sort(arr, size, "spad");
+	Sort_Miz_Vid(arr, size, "spad");
 	CoutMass(arr, size);
 	cout << endl << "Zrost" << endl;
-	Sort(arr, size, "zrost");
+	Sort_Miz_Vid(arr, size, "zrost");
 	CoutMass(arr, size);
 	system("pause");
 }
